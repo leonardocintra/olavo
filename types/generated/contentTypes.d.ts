@@ -362,43 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiRestaurantRestaurant extends Schema.CollectionType {
-  collectionName: 'restaurants';
-  info: {
-    singularName: 'restaurant';
-    pluralName: 'restaurants';
-    displayName: 'restaurant';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    description: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-        maxLength: 50;
-      }>;
-    slug: Attribute.UID<'api::restaurant.restaurant', 'description'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::restaurant.restaurant',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::restaurant.restaurant',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -825,6 +788,164 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCardapioCardapio extends Schema.CollectionType {
+  collectionName: 'cardapios';
+  info: {
+    singularName: 'cardapio';
+    pluralName: 'cardapios';
+    displayName: 'Cardapio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    data_cardapio: Attribute.Date & Attribute.Required;
+    items: Attribute.Relation<
+      'api::cardapio.cardapio',
+      'oneToMany',
+      'api::item.item'
+    >;
+    restaurante_id: Attribute.Relation<
+      'api::cardapio.cardapio',
+      'oneToOne',
+      'api::restaurante.restaurante'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::cardapio.cardapio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::cardapio.cardapio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItemItem extends Schema.CollectionType {
+  collectionName: 'items';
+  info: {
+    singularName: 'item';
+    pluralName: 'items';
+    displayName: 'Item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    descricao: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 50;
+      }>;
+    preco: Attribute.Decimal & Attribute.Required & Attribute.DefaultTo<0>;
+    item_tipo_id: Attribute.Relation<
+      'api::item.item',
+      'oneToOne',
+      'api::item-tipo.item-tipo'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItemTipoItemTipo extends Schema.CollectionType {
+  collectionName: 'item_tipos';
+  info: {
+    singularName: 'item-tipo';
+    pluralName: 'item-tipos';
+    displayName: 'Item Tipo';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    descricao: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 20;
+      }>;
+    exibirPreco: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<true>;
+    imagem: Attribute.Media;
+    restaurante_id: Attribute.Relation<
+      'api::item-tipo.item-tipo',
+      'oneToOne',
+      'api::restaurante.restaurante'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::item-tipo.item-tipo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::item-tipo.item-tipo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRestauranteRestaurante extends Schema.CollectionType {
+  collectionName: 'restaurantes';
+  info: {
+    singularName: 'restaurante';
+    pluralName: 'restaurantes';
+    displayName: 'restaurante';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    descricao: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 50;
+      }>;
+    logo: Attribute.Media;
+    slug: Attribute.UID<'api::restaurante.restaurante', 'descricao'> &
+      Attribute.Required;
+    ativo: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::restaurante.restaurante',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::restaurante.restaurante',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -835,7 +956,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::restaurant.restaurant': ApiRestaurantRestaurant;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -844,6 +964,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::cardapio.cardapio': ApiCardapioCardapio;
+      'api::item.item': ApiItemItem;
+      'api::item-tipo.item-tipo': ApiItemTipoItemTipo;
+      'api::restaurante.restaurante': ApiRestauranteRestaurante;
     }
   }
 }

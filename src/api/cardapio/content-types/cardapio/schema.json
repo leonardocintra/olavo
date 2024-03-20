@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cardapios",
+  "info": {
+    "singularName": "cardapio",
+    "pluralName": "cardapios",
+    "displayName": "Cardapio"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data_cardapio": {
+      "type": "date",
+      "required": true
+    },
+    "items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::item.item"
+    },
+    "restaurante_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::restaurante.restaurante"
+    }
+  }
+}

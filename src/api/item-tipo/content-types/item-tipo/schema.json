@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "item_tipos",
+  "info": {
+    "singularName": "item-tipo",
+    "pluralName": "item-tipos",
+    "displayName": "Item Tipo",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "descricao": {
+      "type": "string",
+      "required": true,
+      "minLength": 3,
+      "maxLength": 20
+    },
+    "exibirPreco": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "imagem": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "restaurante_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::restaurante.restaurante"
+    }
+  }
+}
