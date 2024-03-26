@@ -19,11 +19,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::item.item"
-    },
-    "restaurante_id": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::restaurante.restaurante"
     }
   }
 }

@@ -30,11 +30,6 @@
       "allowedTypes": [
         "images"
       ]
-    },
-    "restaurante_id": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::restaurante.restaurante"
     }
   }
 }

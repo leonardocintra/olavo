@@ -695,7 +695,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -805,11 +804,6 @@ export interface ApiCardapioCardapio extends Schema.CollectionType {
       'oneToMany',
       'api::item.item'
     >;
-    restaurante_id: Attribute.Relation<
-      'api::cardapio.cardapio',
-      'oneToOne',
-      'api::restaurante.restaurante'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -821,6 +815,81 @@ export interface ApiCardapioCardapio extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::cardapio.cardapio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGlobalGlobal extends Schema.SingleType {
+  collectionName: 'globals';
+  info: {
+    singularName: 'global';
+    pluralName: 'globals';
+    displayName: 'Global';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    description: Attribute.String;
+    header: Attribute.Component<'layout.header'>;
+    footer: Attribute.Component<'layout.footer'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::global.global',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::global.global',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHomePageHomePage extends Schema.SingleType {
+  collectionName: 'home_pages';
+  info: {
+    singularName: 'home-page';
+    pluralName: 'home-pages';
+    displayName: 'Home Page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    description: Attribute.Text;
+    blocos: Attribute.DynamicZone<['layout.hero-section']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::home-page.home-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::home-page.home-page',
       'oneToOne',
       'admin::user'
     > &
@@ -883,11 +952,6 @@ export interface ApiItemTipoItemTipo extends Schema.CollectionType {
       Attribute.Required &
       Attribute.DefaultTo<true>;
     imagem: Attribute.Media;
-    restaurante_id: Attribute.Relation<
-      'api::item-tipo.item-tipo',
-      'oneToOne',
-      'api::restaurante.restaurante'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -899,46 +963,6 @@ export interface ApiItemTipoItemTipo extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::item-tipo.item-tipo',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiRestauranteRestaurante extends Schema.CollectionType {
-  collectionName: 'restaurantes';
-  info: {
-    singularName: 'restaurante';
-    pluralName: 'restaurantes';
-    displayName: 'restaurante';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    descricao: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-        maxLength: 50;
-      }>;
-    logo: Attribute.Media;
-    slug: Attribute.UID<'api::restaurante.restaurante', 'descricao'> &
-      Attribute.Required;
-    ativo: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::restaurante.restaurante',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::restaurante.restaurante',
       'oneToOne',
       'admin::user'
     > &
@@ -965,9 +989,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::cardapio.cardapio': ApiCardapioCardapio;
+      'api::global.global': ApiGlobalGlobal;
+      'api::home-page.home-page': ApiHomePageHomePage;
       'api::item.item': ApiItemItem;
       'api::item-tipo.item-tipo': ApiItemTipoItemTipo;
-      'api::restaurante.restaurante': ApiRestauranteRestaurante;
     }
   }
 }

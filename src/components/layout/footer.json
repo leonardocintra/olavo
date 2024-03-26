@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_layout_footers",
+  "info": {
+    "displayName": "Footer",
+    "icon": "underline",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "logoText": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.link"
+    },
+    "texto": {
+      "type": "text"
+    },
+    "socialButtons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.link"
+    },
+    "icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
