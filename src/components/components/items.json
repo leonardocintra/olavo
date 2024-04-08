@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_items",
+  "info": {
+    "displayName": "items",
+    "icon": "cube"
+  },
+  "options": {},
+  "attributes": {
+    "quantidade": {
+      "type": "integer"
+    },
+    "item_tipo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::item-tipo.item-tipo"
+    }
+  }
+}

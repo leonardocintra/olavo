@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "marmitex_items",
+  "info": {
+    "singularName": "marmitex-item",
+    "pluralName": "marmitex-items",
+    "displayName": "Marmitex Item"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "item_tipo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::item-tipo.item-tipo"
+    },
+    "quantidade": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 1
+    },
+    "marmitex": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::marmitex.marmitex",
+      "inversedBy": "configuracoes"
+    }
+  }
+}

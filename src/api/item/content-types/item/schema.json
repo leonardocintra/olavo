@@ -4,7 +4,8 @@
   "info": {
     "singularName": "item",
     "pluralName": "items",
-    "displayName": "Item"
+    "displayName": "Item",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,7 +23,7 @@
       "default": 0,
       "required": true
     },
-    "item_tipo_id": {
+    "item_tipo": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::item-tipo.item-tipo"
